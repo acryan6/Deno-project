@@ -1,4 +1,4 @@
-import { Router } from "https://deno.land/x/oak@v10.0.0/mod.ts";
+import { Router } from "./deps.ts";
 
 const router = new Router();
 
@@ -13,5 +13,7 @@ router.get("/", (ctx) => {
     {__      {__{__         {__  {__ __  {__         {__
                     Mission Control API`;
 });
+
+// router.get("/planets");
 
 export default router;

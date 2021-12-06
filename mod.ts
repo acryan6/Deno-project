@@ -1,4 +1,4 @@
-import { Application, send } from "https://deno.land/x/oak@v10.0.0/mod.ts";
+import { Application, send } from "./deps.ts";
 
 import api from "./api.ts";
 
@@ -19,6 +19,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(api.routes());
+app.use(api.allowedMethods());
 
 app.use(async (ctx) => {
   const filePath = ctx.request.url.pathname;
