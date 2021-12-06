@@ -1,7 +1,7 @@
 // Std library
 
 export { join } from "https://deno.land/std/path/mod.ts";
-export { BufReader } from "https://deno.land/std@0.116.0/io/bufio.ts";
+export { BufReader } from "https://deno.land/std/io/bufio.ts";
 export { parse } from "https://deno.land/std/encoding/csv.ts";
 
 // 3rd party deps

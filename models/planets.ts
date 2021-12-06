@@ -1,11 +1,11 @@
 import { parse, join, BufReader, _ } from "../deps.ts";
 
-interface Planet {
-  [key: string]: string;
-}
+type Planet = Record<string, string>;
+
+let planets: Planet[] = [];
 
 const loadPlanetsData = async () => {
-  const path = join(".", "kepler_exoplanets_nasa.csv");
+  const path = join("data", "kepler_exoplanets_nasa.csv");
 
   const file = await Deno.open(path);
   const bufReader = new BufReader(file);
@@ -43,8 +43,9 @@ const loadPlanetsData = async () => {
   );
 };
 
-const newEarths = await loadPlanetsData();
-for (const planet of newEarths) {
-  console.log(planet);
-}
-console.log(`${newEarths.length} habitable planets found!`);
+planets = await loadPlanetsData();
+console.log(`${planets.length} habitable planets found!`);
+
+export const getAllPlanets = () => {
+  return planets;
+};

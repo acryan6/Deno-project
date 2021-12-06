@@ -1,5 +1,7 @@
 import { Router } from "./deps.ts";
 
+import * as planets from "./models/planets.ts";
+
 const router = new Router();
 
 router.get("/", (ctx) => {
@@ -14,6 +16,8 @@ router.get("/", (ctx) => {
                     Mission Control API`;
 });
 
-// router.get("/planets");
+router.get("/planets", (ctx) => {
+  ctx.response.body = planets.getAllPlanets();
+});
 
 export default router;
