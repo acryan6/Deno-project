@@ -1,5 +1,3 @@
-let launches;
-
 const numberHeading = "No.".padStart(5);
 const dateHeading = "Date".padEnd(15);
 const missionHeading = "Mission".padEnd(25);
@@ -7,7 +5,7 @@ const rocketHeading = "Rocket".padEnd(22);
 const targetHeading = "Destination";
 const customersHeading = "Customers";
 
-let launches = [];
+const launches = [];
 
 function initValues() {
   const today = new Date().toISOString().split("T")[0];
@@ -22,14 +20,15 @@ function loadLaunches() {
 }
 
 function loadPlanets() {
-  const planets = [
-    { kepler_name: "X Æ A-12" },
-    { kepler_name: "Beta Gamma B" },
-  ];
-  const planetSelector = document.getElementById("planets-selector");
-  planets.forEach((planet) => {
-    planetSelector.innerHTML += `<option value="${planet.kepler_name}">${planet.kepler_name}</option>`;
-  });
+  return fetch("/planets")
+    .then((res) => res.json())
+    .then((planets) => {
+      console.log(planets);
+      const planetSelector = document.getElementById("planets-selector");
+      planets.forEach((planet) => {
+        planetSelector.innerHTML += `<option value="${planet.kepler_name}">${planet.kepler_name}</option>`;
+      });
+    });
 }
 
 function abortLaunch() {
