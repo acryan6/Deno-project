@@ -1,21 +1,11 @@
-import { parse, join, BufReader, _ } from "../deps.ts";
+import { parse, join, BufReader, _ } from "../../deps.ts";
 
 type Planet = Record<string, string>;
 
 let planets: Planet[] = [];
 
-const loadPlanetsData = async () => {
-  const path = join("data", "kepler_exoplanets_nasa.csv");
-
-  const file = await Deno.open(path);
-  const bufReader = new BufReader(file);
-  const result = await parse(bufReader, {
-    skipFirstRow: true,
-    comment: "#",
-  });
-  Deno.close(file.rid);
-
-  const planets = (result as Array<Planet>).filter((planet) => {
+export const filterHabitablePlanets = (planets: Planet[]) => {
+  return planets.filter((planet) => {
     const planetaryRadius = Number(planet["koi_prad"]);
     const stellarMass = Number(planet["koi_smass"]);
     const stellarRadius = Number(planet["koi_srad"]);
@@ -30,6 +20,20 @@ const loadPlanetsData = async () => {
       stellarRadius < 1.01
     );
   });
+};
+
+const loadPlanetsData = async () => {
+  const path = join("data", "kepler_exoplanets_nasa.csv");
+
+  const file = await Deno.open(path);
+  const bufReader = new BufReader(file);
+  const result = await parse(bufReader, {
+    skipFirstRow: true,
+    comment: "#",
+  });
+  Deno.close(file.rid);
+
+  const planets = filterHabitablePlanets(result as Planet[]);
 
   return planets.map((planet) =>
     _.pick(planet, [
