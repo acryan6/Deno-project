@@ -1,4 +1,4 @@
-import { parse, join, BufReader, _ } from "../../deps.ts";
+import { parse, join, BufReader, _, log } from "../../deps.ts";
 
 type Planet = Record<string, string>;
 
@@ -48,7 +48,7 @@ const loadPlanetsData = async () => {
 };
 
 planets = await loadPlanetsData();
-console.log(`${planets.length} habitable planets found!`);
+log.info(`${planets.length} habitable planets found!`);
 
 export const getAllPlanets = () => {
   return planets;
