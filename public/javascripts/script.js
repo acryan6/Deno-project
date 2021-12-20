@@ -18,7 +18,6 @@ function loadLaunches() {
   fetch("/launches")
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       launches = data.sort((a, b) => a.flightNumber < b.flightNumber);
     });
 }
@@ -35,7 +34,13 @@ function loadPlanets() {
     });
 }
 
-function abortLaunch() {}
+function abortLaunch(id) {
+  fetch(`/launches/${id}`, {
+    method: "delete",
+  })
+    .then(loadLaunches)
+    .then(listUpcoming);
+}
 
 function submitLaunch() {
   const target = document.getElementById("planets-selector").value;
@@ -63,7 +68,7 @@ function submitLaunch() {
     .then(() => {
       document.getElementById("launch-success").hidden = false;
     })
-    .then(loadLaunches());
+    .then(loadLaunches);
 }
 
 function listUpcoming() {
