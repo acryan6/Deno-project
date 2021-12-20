@@ -5,7 +5,7 @@ const rocketHeading = "Rocket".padEnd(22);
 const targetHeading = "Destination";
 const customersHeading = "Customers";
 
-const launches = [];
+let launches = [];
 
 function initValues() {
   const today = new Date().toISOString().split("T")[0];
@@ -15,8 +15,12 @@ function initValues() {
 }
 
 function loadLaunches() {
-  // TODO: Once API is ready.
-  // Load launches and sort by flight number.
+  fetch("/launches")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      launches = data.sort((a, b) => a.flightNumber < b.flightNumber);
+    });
 }
 
 function loadPlanets() {
@@ -31,10 +35,7 @@ function loadPlanets() {
     });
 }
 
-function abortLaunch() {
-  // TODO: Once API is ready.
-  // Delete launch and reload launches.
-}
+function abortLaunch() {}
 
 function submitLaunch() {
   const target = document.getElementById("planets-selector").value;
