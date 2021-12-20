@@ -46,20 +46,24 @@ function submitLaunch() {
 
   const customers = ["NASA", "ZTM"];
 
-  launches.push({
-    target,
-    launchDate: launchDate / 1000,
-    mission,
-    rocket,
-    flightNumber,
-    customers,
-    upcoming: true,
-  });
-
-  document.getElementById("launch-success").hidden = false;
-
-  // TODO: Once API is ready.
-  // Submit above data to launch system and reload launches.
+  return fetch("/launches", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      launchDate: Math.floor(launchDate / 1000),
+      flightNumber,
+      mission,
+      rocket,
+      target,
+      customers,
+    }),
+  })
+    .then(() => {
+      document.getElementById("launch-success").hidden = false;
+    })
+    .then(loadLaunches());
 }
 
 function listUpcoming() {
